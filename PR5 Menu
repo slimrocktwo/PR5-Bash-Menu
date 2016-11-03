@@ -1,0 +1,186 @@
+#!/bin/bash
+
+## Created by Steve Langewicz II
+## PR 5 Menu 11-2-2016
+
+
+declare -i repeatMainMenu = 0 #will not repeat loop
+declare -a  OPTIONS[0]="Editing Commands"
+declare -a OPTIONS[1]="Games"
+declare -a OPTIONS[2]="User Administration"
+declare -a OPTIONS[3]="Process Commands" #sub
+declare -a OPTIONS[4]="System Commands" #sub
+declare -a OPTIONS[5]="Network Commands" #sub
+declare -a OPTIONS[6]="Quit"
+declare -a processOptions[0]="View IDs"
+declare -a processOptions[1]="Kill"
+declare -a processOptions[2]="Main Menu"
+declare -a processOptions[3]="Quit"
+declare -a systemOptions[0]="View Config"
+declare -a systemOptions[1]="Edit .bash_profile"
+declare -a systemOptions[2]="Return to Main Menu"
+declare -a systemOptions[3]="Quit"
+declare -a networkOptions[0]="Ping"
+declare -a networkOptions[1]="Netstat"
+declare -a networkOptions[2]="Return to Main Menu"
+declare -a networkOptions[3]="Quit"
+
+main(){
+        menu
+        while [[ $repeatMainMenu == 1 ]]; do
+                repeatMainMenu=0
+                menu
+        done
+        return  0;
+}
+
+
+menu () {
+        clear
+        echo -e "Welcome to Linux! \n\nChoose an option below:\n"
+
+        select userChoice in "${OPTIONS[@]}"; do
+                case $userChoice in
+                ${OPTIONS[0]})
+                        echo -e "This option will contain a script that explains editing commands\n\n"
+                        sleep 2
+                        break
+                ;;
+                ${OPTIONS[1]})
+                        echo -e "This option will contain a listing of games that can be played outside of work\n\n"
+                        sleep 2
+                        break
+                ;;
+                ${OPTIONS[2]})
+                        echo -e "This option will contain a script to aid in user administration\n\n"
+                        sleep 2
+                        break
+                ;;
+                ${OPTIONS[3]})
+                        processSubMenu
+                        break
+                ;;
+                ${OPTIONS[4]})
+                        systemSubMenu
+                        break
+                ;;
+                ${OPTIONS[5]})
+                        networkSubMenu
+                        break
+                ;;
+                ${OPTIONS[6]})
+                        repeatMainMenu=0
+                        echo "Exiting..."
+                        return 0;
+                ;;
+                *)
+                        echo -e "That is not a valid option. Try again,\n"
+                        sleep 2
+                ;;
+        esac
+        done
+}
+
+processSubMenu(){
+        clear
+        echo -e "You are in the Process Commands menu. \n\nChoose an option below:\n"
+
+        select userChoiceProcess in "${processOptions[@]}"; do
+                case $userChoiceProcess in
+                ${processOptions[0]})
+                        echo -e "This option will open a script that shows Process IDs\n\n"
+                        sleep 2
+                        break
+                ;;
+                ${processOptions[1]})
+                        echo -e "This option will allow you to suspend or kill processes\n\n"
+                        sleep 2
+                        break
+                ;;
+                ${processOptions[2]})
+                        repeatMainMenu=1
+                        break
+                ;;
+                ${processOptions[3]})
+                        repeatMainMenu=0
+                        echo "Exiting..."
+                        break
+                ;;
+                *)
+                        echo -e "That is not a valid option. Try again,\n"
+                        sleep 2
+                ;;
+        esac
+        done
+
+}
+
+systemSubMenu(){
+        clear
+        echo -e "You are in the System Commands menu. \n\nChoose an option below:\n"
+
+        select userChoiceSystem in "${systemOptions[@]}"; do
+                case $userChoiceSystem in
+                ${systemOptions[0]})
+                        echo -e "This option will allow you to view system configurations\n\n"
+                        sleep 2
+                        break
+                ;;
+                ${systemOptions[1]})
+                        echo -e "This option will open your .bash_profile for editing in VI\n\n"
+                        sleep 2
+                        break
+                ;;
+                ${systemOptions[2]})    #exit to main menu
+                        repeatMainMenu=1
+                        break
+                ;;
+                ${systemOptions[3]})
+                        repeatMainMenu=0
+                        echo "Exiting..."
+                        break
+                ;;
+                *)
+                        echo -e "That is not a valid option. Try again,\n"
+                        sleep 2
+                ;;
+        esac
+        done
+
+}
+
+networkSubMenu(){
+        clear
+        echo -e "You are in the Network Commands menus. \n\nChoose an option below:\n"
+
+        select userChoiceNetwork in "${networkOptions[@]}"; do
+                case $userChoiceNetwork in
+                ${networkOptions[0]})
+                        echo -e "This option will open a Ping tool\n\n"
+                        sleep 2
+                        break
+                ;;
+                ${networkOptions[1]})
+                        echo -e "This option will open Netstat, a network monitor\n\n"
+                        sleep 2
+                        break
+                ;;
+                ${networkOptions[2]})
+                        repeatMainMenu=1
+                        break
+                ;;
+                ${networkOptions[3]})
+                        repeatMainMenu=0
+                        echo "Exiting..."
+                        break
+                ;;
+                *)
+                        echo -e "That is not a valid option. Try again,\n"
+                        sleep 2
+                ;;
+        esac
+        done
+
+}
+
+main
